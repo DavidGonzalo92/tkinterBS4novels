@@ -22,7 +22,7 @@ from tkinter import ttk
 from tkinter import * 
 import sqlite3
 import subprocess
-
+# -- equal url
 
 #we connect to chrome or firefox(chromedriver or geckodriver)
 driver = webdriver.Chrome('C:\\Users\\david\\chromedriver.exe')
@@ -31,7 +31,7 @@ driver.set_window_size(10, 10)
 
 # we obtain the content of the page in this case genre of the novel
 def genero():
-    browser=driver.get('https://readnovelfull.com/')
+    browser=driver.get('-')
     content = driver.page_source
     soup = BeautifulSoup(content)
     generol=[]
@@ -46,7 +46,7 @@ def novelas(genero):
     unique = []
     while i<=7:
         if i==1:
-            browser=driver.get("https://readnovelfull.com/genre/"+ genero.replace(" ", "+"))
+            browser=driver.get("-url-"+ genero.replace(" ", "+"))
             content = driver.page_source
             soup = BeautifulSoup(content)
             lista=[]
@@ -55,7 +55,7 @@ def novelas(genero):
                 lista.append(añadir)
         #'Else' its cause you change the url when you move to other page 
         else:
-            browser=driver.get("https://readnovelfull.com/genre/"+ genero.replace(" ", "+")+'?page='+str(i))
+            browser=driver.get("-url-"+ genero.replace(" ", "+")+'?page='+str(i))
             content = driver.page_source
             soup = BeautifulSoup(content)
             for a in soup.findAll("h3", class_="novel-title"):
@@ -86,7 +86,7 @@ def capitulos(novela):
     novela=novela.replace("'s","s")
     novela=novela.replace(": ","-")
     novela=novela.replace(" ","-")
-    novela="https://readnovelfull.com/"+ novela +'.html#tab-chapters-title'       
+    novela="-url-"+ novela +'.html#tab-chapters-title'       
     driver.get(novela)
     elem = driver.find_element_by_css_selector('#tab-chapters')
     html = driver.execute_script("return arguments[0].innerHTML;", elem)
@@ -101,7 +101,7 @@ def capitulos(novela):
 # we obtain the text of the novel
 def escribir_novela(urlpagina):
     T.delete('1.0', END)
-    browser=driver.get("https://readnovelfull.com"+urlpagina)
+    browser=driver.get("-url-"+urlpagina)
     content = driver.page_source
     soup = BeautifulSoup(content)
     for a in  soup.findAll("div", class_="chr-c"):
@@ -114,7 +114,7 @@ def capitulos_siguiente():
     numero_inicio+=1
     T.delete('1.0', END)
     urlpagina=lista_novela[numero_inicio]
-    browser=driver.get("https://readnovelfull.com"+urlpagina)
+    browser=driver.get("-url-"+urlpagina)
     content = driver.page_source
     soup = BeautifulSoup(content)
     for a in  soup.findAll("div", class_="chr-c"):
@@ -128,7 +128,7 @@ def capitulos_anterior():
     numero_inicio-=1
     T.delete('1.0', END)
     urlpagina=lista_novela[numero_inicio]
-    browser=driver.get("https://readnovelfull.com"+urlpagina)
+    browser=driver.get("-"+urlpagina)
     content = driver.page_source
     soup = BeautifulSoup(content)
     for a in  soup.findAll("div", class_="chr-c"):
@@ -143,7 +143,7 @@ def elegir_capitulo():
             numero_inicio=int(e1.get())-1
             T.delete('1.0', END)
             urlpagina=lista_novela[numero_inicio]
-            browser=driver.get("https://readnovelfull.com"+urlpagina)
+            browser=driver.get("-"+urlpagina)
             content = driver.page_source
             soup = BeautifulSoup(content)
             for a in  soup.findAll("div", class_="chr-c"):
