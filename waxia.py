@@ -22,7 +22,7 @@ from tkinter import ttk
 from tkinter import * 
 import sqlite3
 import subprocess
-# -- equal url
+
 
 #we connect to chrome or firefox(chromedriver or geckodriver)
 driver = webdriver.Chrome('C:\\Users\\david\\chromedriver.exe')
@@ -31,7 +31,7 @@ driver.set_window_size(10, 10)
 
 # we obtain the content of the page in this case genre of the novel
 def genero():
-    browser=driver.get('-')
+    browser=driver.get('-url-')
     content = driver.page_source
     soup = BeautifulSoup(content)
     generol=[]
